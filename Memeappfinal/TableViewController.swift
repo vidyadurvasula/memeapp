@@ -22,19 +22,18 @@ class TableViewController: UIViewController,UITableViewDataSource,UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableidentity")!
-        UserDefaults.standard.set(memes, forKey: "items")
         
         let memedata = memes[(indexPath as NSIndexPath).row]
-        cell.textLabel!.text = "\(memedata.topText)|| \(memedata.bottomText)"
+        cell.textLabel!.text = "\(memedata.topText) - \(memedata.bottomText)"
         
         cell.imageView?.image = memedata.memedImage
-        
         return cell
     }
     
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

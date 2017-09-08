@@ -25,15 +25,14 @@ class CollectionViewController: UIViewController,UICollectionViewDelegate, UICol
  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionidentity", for: indexPath) as! DisplayViewCell
+        let cellcollect = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionidentity", for: indexPath) as! DisplayViewCell
         let memedata = self.memes[(indexPath as NSIndexPath).row]
         
-        cell.topTextlabel.text = "\(memedata.topText)"
-        cell.backgroundColor = UIColor.black
-        cell.image.image = memedata.memedImage
-        cell.bottomLabel.text = "\(memedata.bottomText)"
-        
-        return cell
+        cellcollect.topTextlabel.text = "\(memedata.topText)"
+        cellcollect.backgroundColor = UIColor.white
+        cellcollect.image.image = memedata.memedImage
+        cellcollect.bottomLabel.text = "\(memedata.bottomText)"
+        return cellcollect
         
     }
     
@@ -41,16 +40,22 @@ class CollectionViewController: UIViewController,UICollectionViewDelegate, UICol
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        memes = appDelegate.memes
+        self.collectionView.reloadData()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        memes = appDelegate.memes
-        self.collectionView.reloadData()
-                
+        let space:CGFloat = 3.0
+        let dimension = (view.frame.size.width - (2 * space)) / 3.0
+        
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
     }
     
     
