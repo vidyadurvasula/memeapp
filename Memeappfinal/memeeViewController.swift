@@ -8,7 +8,7 @@
 
 import UIKit
 
-class memeeViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
+class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate {
     @IBOutlet weak var imagepick: UIImageView!
     @IBOutlet weak var Toptext: UITextField!
     
@@ -66,7 +66,9 @@ class memeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         // Create the meme
         let memeepick = Meme(topText: Toptext.text!, bottomText : bottom.text!, origImage: imagepick.image!, memedImage:contextMemedImage )
         
-        
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(memeepick)
     }
     
     
@@ -185,7 +187,7 @@ class memeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     }
     func hideKeyboardWhenTappedAround() {
         view.frame.origin.y = 0
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(memeeViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MemeeViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
