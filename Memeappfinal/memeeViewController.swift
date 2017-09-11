@@ -25,6 +25,8 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     @IBOutlet weak var cancel: UIBarButtonItem!
     
     @IBOutlet weak var sharebutton: UIBarButtonItem!
+    
+    
     @IBAction func shareaction(_ sender: Any) {
         let memedImage = generateMemedImage()
         let activeController = UIActivityViewController( activityItems: [memedImage], applicationActivities: nil )
@@ -44,7 +46,9 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         
         present( activeController, animated: true, completion: nil )
     }
-    
+    var isEditMode: Bool! = false
+    var memeToBeEdited: Meme!
+
     func generateMemedImage() -> UIImage {
         
         // Render view to an imag
@@ -59,16 +63,15 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         self.bottomtoolbar.isHidden = false
         return memedImage
     }
-    
-    
+       
     func save(memedImage: UIImage) {
         let contextMemedImage = generateMemedImage()
         // Create the meme
-        let memeepick = Meme(topText: Toptext.text!, bottomText : bottom.text!, origImage: imagepick.image!, memedImage:contextMemedImage )
+        let meme = Meme(topText: Toptext.text!, bottomText : bottom.text!, origImage: imagepick.image!, memedImage:contextMemedImage )
         
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
-        appDelegate.memes.append(memeepick)
+        appDelegate.memes.append(meme)
     }
     
     
@@ -104,14 +107,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     }
     
     
-    let memeTxtAttributes:[String:Any] =
-        [
-            NSStrokeColorAttributeName: UIColor.black,
-            NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont( name: "HelveticaNeue-CondensedBlack", size: 40 )!,
-            NSStrokeWidthAttributeName: NSNumber( value: -4.0 )
-    ]
-    func pickImageforalbum ( sourceType: UIImagePickerControllerSourceType )
+       func pickImageforalbum ( sourceType: UIImagePickerControllerSourceType )
     {
         
         
@@ -135,9 +131,9 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     
     
     func keyboardWillShow(_ notification:Notification) {
-        
+        if bottom.isFirstResponder {
         view.frame.origin.y -= getKeyboardHeight(notification)
-        
+        }
     }
     func keyboardWillHide(notification: NSNotification){
         if self.view.frame.origin.y != 0{
@@ -199,6 +195,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     }
 
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         sharebutton.isEnabled = false
@@ -206,17 +203,35 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         imagepick.contentMode = .scaleAspectFit
         Toptext.text = "Top"
         bottom.text = "Bottom"
-        Toptext.defaultTextAttributes = memeTxtAttributes
-        Toptext.textAlignment = NSTextAlignment.center
-        bottom.defaultTextAttributes = memeTxtAttributes
-        bottom.textAlignment = NSTextAlignment.center
+        settextattributes(textfield: Toptext)
+        settextattributes(textfield: bottom)
         hideKeyboardWhenTappedAround()
         Toptext.delegate = self
         bottom.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SentMeme", style: .plain, target: self, action: #selector(sentmeme))
+        if isEditMode! {
+            
+            imagepick.image = memeToBeEdited.origImage
+            Toptext.text = memeToBeEdited.topText
+            bottom.text = memeToBeEdited.bottomText
+        }
+
+    }
+    
+    func sentmeme(){
+        
+        if let navigationController = navigationController {
+            navigationController.popToRootViewController(animated: true)
+            
+        }
+
     }
     
     
-    
-    
+    override func viewWillAppear(_ animated: Bool) {
+       
+    }
 }
+    
+
 

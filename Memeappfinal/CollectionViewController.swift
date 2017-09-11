@@ -9,10 +9,17 @@
 import UIKit
 
 class CollectionViewController: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource {
-    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
     var memes = [Meme]()
     
+    @IBOutlet weak var add: UIBarButtonItem!
     
+    @IBAction func addaction(_ sender: Any) {
+        let storyboard = UIStoryboard (name: "Main", bundle: nil)
+        let memeDetailVC = storyboard.instantiateViewController(withIdentifier: "memeidntifier") as! MemeeViewController
+        self.navigationController!.pushViewController(memeDetailVC, animated: true)
+    }
  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return memes.count
     }
@@ -31,17 +38,36 @@ class CollectionViewController: UIViewController,UICollectionViewDelegate, UICol
         cellcollect.topTextlabel.text = "\(memedata.topText)"
         cellcollect.backgroundColor = UIColor.white
         cellcollect.image.image = memedata.memedImage
+        cellcollect.image.contentMode = .scaleAspectFit
         cellcollect.bottomLabel.text = "\(memedata.bottomText)"
         return cellcollect
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let meme = appDelegate.memes[indexPath.row]
+        
+        // Get the Storyboard and View Controller
+        let storyboard = UIStoryboard (name: "Main", bundle: nil)
+        let memeDetailVC = storyboard.instantiateViewController(withIdentifier: "memedetail") as! MemedeyailviewController
+        
+        // Valuate the top, bottom, and image vars
+        
+        memeDetailVC.valueTextFieldTop = meme.topText
+        memeDetailVC.valueTextFieldBottom = meme.bottomText
+        memeDetailVC.valueImageMain = meme.origImage
+        
+        //self.present(memeDetailVC, animated: true, completion: nil)
+        self.navigationController!.pushViewController(memeDetailVC, animated: true)
+
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        memes = appDelegate.memes
+                memes = appDelegate.memes
         self.collectionView.reloadData()
 
     }
