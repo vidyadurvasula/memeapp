@@ -18,7 +18,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     
     @IBOutlet weak var Toptoolbar: UIToolbar!
     
-   
+    
     @IBOutlet weak var bottomtoolbar: UIToolbar!
     
     
@@ -48,7 +48,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     }
     var isEditMode: Bool! = false
     var memeToBeEdited: Meme!
-
+    
     func generateMemedImage() -> UIImage {
         
         // Render view to an imag
@@ -63,7 +63,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         self.bottomtoolbar.isHidden = false
         return memedImage
     }
-       
+    
     func save(memedImage: UIImage) {
         let contextMemedImage = generateMemedImage()
         // Create the meme
@@ -80,6 +80,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         Toptext.text = "TOP"
         bottom.text = "BOTTOM"
         imagepick.image = nil
+        sharebutton.isEnabled = false
     }
     
     @IBAction func choosealbum(_ sender: Any) {
@@ -107,7 +108,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     }
     
     
-       func pickImageforalbum ( sourceType: UIImagePickerControllerSourceType )
+    func pickImageforalbum ( sourceType: UIImagePickerControllerSourceType )
     {
         
         
@@ -132,7 +133,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
     
     func keyboardWillShow(_ notification:Notification) {
         if bottom.isFirstResponder {
-        view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y -= getKeyboardHeight(notification)
         }
     }
     func keyboardWillHide(notification: NSNotification){
@@ -193,29 +194,25 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         view.frame.origin.y = 0
         view.endEditing(true)
     }
-
     
     
+    func initialsetup(textfield:UITextField, initialtext: String, delegate:UITextFieldDelegate){
+        textfield.text = initialtext
+        textfield.delegate = delegate
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         sharebutton.isEnabled = false
         cancel.isEnabled = false
         imagepick.contentMode = .scaleAspectFit
-        Toptext.text = "Top"
-        bottom.text = "Bottom"
+        initialsetup(textfield: Toptext, initialtext: "Top", delegate:self )
+        initialsetup(textfield: bottom, initialtext: "BOTTOM", delegate: self)
         settextattributes(textfield: Toptext)
         settextattributes(textfield: bottom)
         hideKeyboardWhenTappedAround()
-        Toptext.delegate = self
-        bottom.delegate = self
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SentMeme", style: .plain, target: self, action: #selector(sentmeme))
-        if isEditMode! {
-            
-            imagepick.image = memeToBeEdited.origImage
-            Toptext.text = memeToBeEdited.topText
-            bottom.text = memeToBeEdited.bottomText
-        }
-
+        
     }
     
     func sentmeme(){
@@ -224,13 +221,10 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
             navigationController.popToRootViewController(animated: true)
             
         }
-
+        
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-       
-    }
 }
     
 
