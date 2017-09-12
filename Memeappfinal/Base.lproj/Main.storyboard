@@ -244,7 +244,7 @@
                                 <rect key="frame" x="0.0" y="30" width="414" height="686"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hbs-R5-hN4" userLabel="toptext">
-                                <rect key="frame" x="10" y="80" width="419" height="35"/>
+                                <rect key="frame" x="10" y="80" width="399" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="pH0-bE-Z4H"/>
                                 </constraints>
@@ -272,7 +272,7 @@
                             <constraint firstItem="fHp-mR-oao" firstAttribute="top" secondItem="JzE-nS-EAs" secondAttribute="bottom" constant="50" id="SXC-8l-ZSZ"/>
                             <constraint firstItem="Hbs-R5-hN4" firstAttribute="leading" secondItem="rY9-Ns-LSh" secondAttribute="leading" constant="10" id="aGX-Pv-g3R"/>
                             <constraint firstItem="JzE-nS-EAs" firstAttribute="leading" secondItem="rY9-Ns-LSh" secondAttribute="leadingMargin" constant="-20" id="aw6-sq-Y4H"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Hbs-R5-hN4" secondAttribute="trailing" constant="-35" id="jFG-jP-bZX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Hbs-R5-hN4" secondAttribute="trailing" constant="-15" id="jFG-jP-bZX"/>
                             <constraint firstAttribute="bottomMargin" secondItem="nVa-ne-2f7" secondAttribute="bottom" constant="20" id="kcU-PU-vnB"/>
                         </constraints>
                     </view>
