@@ -210,17 +210,7 @@ class MemeeViewController: UIViewController, UIImagePickerControllerDelegate,UIN
         settextattributes(textfield: Toptext)
         settextattributes(textfield: bottom)
         hideKeyboardWhenTappedAround()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SentMeme", style: .plain, target: self, action: #selector(sentmeme))
-        
-    }
-    
-    func sentmeme(){
-        
-        if let navigationController = navigationController {
-            navigationController.popToRootViewController(animated: true)
-            
-        }
+       self.navigationController!.navigationBar.topItem!.title = "SentMeme"
         
     }
     

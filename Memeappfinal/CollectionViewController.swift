@@ -35,11 +35,11 @@ class CollectionViewController: UIViewController,UICollectionViewDelegate, UICol
         let cellcollect = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionidentity", for: indexPath) as! DisplayViewCell
         let memedata = self.memes[(indexPath as NSIndexPath).row]
         
-        cellcollect.topTextlabel.text = "\(memedata.topText)"
+      //  cellcollect.topTextlabel.text = "\(memedata.topText)"
         cellcollect.backgroundColor = UIColor.white
         cellcollect.image.image = memedata.memedImage
         cellcollect.image.contentMode = .scaleAspectFit
-        cellcollect.bottomLabel.text = "\(memedata.bottomText)"
+        //cellcollect.bottomLabel.text = "\(memedata.bottomText)"
         return cellcollect
         
     }
